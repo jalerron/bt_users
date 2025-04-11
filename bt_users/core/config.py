@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     )
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
-    # db: DatabaseConfig
+    db: DatabaseConfig
 
     # database_url: str = f'postgresql://postgres:PosSwtbme6^98(*@localhost/users_app'
 
