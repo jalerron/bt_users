@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     db: DatabaseConfig = DatabaseConfig()
 
 settings = Settings(
-    _env_file=("bt_users/.env-template","bt_users/.env"),
+    _env_file=("bt_users/.env.template","bt_users/.env"),
     _env_file_encoding="utf-8",
 )
 print(settings.db.url)
