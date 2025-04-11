@@ -1,3 +1,4 @@
+from click.core import F
 from pydantic import BaseModel, PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,26 +17,28 @@ class ApiPrefix(BaseModel):
 
 
 class DatabaseConfig(BaseModel):
-    url: PostgresDsn
+    # Define URL field that will be overridden by environment variables
+    url: PostgresDsn = f"postgresql+asyncpg://user:password@localhost/base"
     echo: bool = False
     echo_pool: bool = False
-    max_overflow: int = 50
-    pool_size: int = 10
-    # str = f'postgresql://postgres:PosSwtbme6^98(*@localhost/users_app'
+    pool_size: int = 50
+    max_overflow: int = 10
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         case_sensitive=False,
         env_nested_delimiter="__",
+        # Remove APP_CONFIG__ prefix to simplify env variable names
         env_prefix="APP_CONFIG__",
     )
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
-    db: DatabaseConfig
-
-    # database_url: str = f'postgresql://postgres:PosSwtbme6^98(*@localhost/users_app'
+    db: DatabaseConfig = DatabaseConfig()
 
 settings = Settings(
-    _env_file = ('.env.template', '.env'),
-    _env_file_encoding = 'utf-8',
-    )   
+    _env_file=".env",
+    _env_file_encoding="utf-8",
+)
+# print(settings.db.url)
+# Now you can set DB_URL in .env file like:
+# DB__URL=postgresql+asyncpg://username:password@localhost/dbname

@@ -1,7 +1,7 @@
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
-from bt_users.core.config import settings
+from core.config import settings
 
 
 class DatabaseHelper:
